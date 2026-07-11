@@ -28,7 +28,7 @@ interface Seller {
     shopAddress: string;
     tradeLicense: string;
   };
-  products?: { id: number; productName: string; price: number }[];
+  products?: { id: number; productName: string; price: number, quantity: number; }[];
   createdAt: string;
   quantity: number;
 }
@@ -108,9 +108,13 @@ export default function SellersPage() {
     0,
   );
   const totalStock = sellers.reduce(
-    (sum, s) =>
-      sum + (s.products?.reduce((p, prod) => p + (prod.quantity ?? 0), 0) ?? 0),
-    0,
+    (sum, seller) =>
+      sum +
+      (seller.products?.reduce(
+        (acc: number, product) => acc + product.quantity,
+        0
+      ) ?? 0),
+    0
   );
 
   return (
@@ -261,8 +265,8 @@ export default function SellersPage() {
 
                     <td className="py-4 text-sm text-[#7a8a6a]">
                       {seller.products?.reduce(
-                        (sum: number, p: any) => sum + Number(p.quantity ?? 0),
-                        0,
+                        (sum: number, product) => sum + product.quantity,
+                        0
                       ) ?? "—"}
                     </td>
 
