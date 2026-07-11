@@ -32,7 +32,7 @@ export default function CartPage() {
       const customerId = payload.sub;
 
       const res = await axios.post(
-        `http://localhost:3000/customer/orders/${customerId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/customer/orders/${customerId}`,
         { paymentMethod },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -63,7 +63,7 @@ export default function CartPage() {
         const customerId = payload.sub;
 
         const res = await axios.get(
-          `http://localhost:3000/customer/cart/${customerId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/customer/cart/${customerId}`,
           { headers: { Authorization: `Bearer ${token}` } },
         );
 
@@ -82,7 +82,7 @@ export default function CartPage() {
   const handleRemove = async (id: number) => {
     try {
       const token = Cookies.get("token");
-      await axios.delete(`http://localhost:3000/customer/cart/${id}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/customer/cart/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCartItems((prev) => prev.filter((item) => item.id !== id));
@@ -101,7 +101,7 @@ export default function CartPage() {
       if (newQuantity < 1) return;
 
       await axios.patch(
-        `http://localhost:3000/customer/cart/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/customer/cart/${id}`,
         { quantity: newQuantity },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -190,7 +190,7 @@ export default function CartPage() {
                     <img
                       src={
                         item.product?.productImage
-                          ? `http://localhost:3000/uploads/products/${item.product.productImage}`
+                          ? `${process.env.NEXT_PUBLIC_API_URL}/uploads/products/${item.product.productImage}`
                           : "/no-image.png"
                       }
                       alt={item.product?.productName}
@@ -291,10 +291,9 @@ export default function CartPage() {
                         key={opt.value}
                         onClick={() => setPaymentMethod(opt.value)}
                         className={`flex flex-col items-center justify-center gap-1 py-2.5 px-2 rounded-xl border text-xs font-semibold transition-all
-                          ${
-                            paymentMethod === opt.value
-                              ? "border-indigo-500 bg-indigo-50 text-indigo-700 shadow-sm"
-                              : "border-slate-200 text-slate-500 hover:border-indigo-300 hover:bg-slate-50"
+                          ${paymentMethod === opt.value
+                            ? "border-indigo-500 bg-indigo-50 text-indigo-700 shadow-sm"
+                            : "border-slate-200 text-slate-500 hover:border-indigo-300 hover:bg-slate-50"
                           }`}
                       >
                         <span className="text-lg">{opt.emoji}</span>

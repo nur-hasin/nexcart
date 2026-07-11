@@ -33,7 +33,7 @@ export default function CustomersPage() {
     try {
       setLoading(true);
       const res = await axios.get(
-        "http://localhost:3000/customer/orders-details",
+        `${process.env.NEXT_PUBLIC_API_URL}/customer/orders-details`,
         authHeader(),
       );
       const orders = Array.isArray(res.data) ? res.data : [];
@@ -86,7 +86,7 @@ export default function CustomersPage() {
     } finally {
       setLoading(false);
     }
-  }; 
+  };
 
   useEffect(() => {
     fetchCustomers();

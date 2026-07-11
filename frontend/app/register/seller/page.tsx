@@ -105,7 +105,7 @@ export default function SellerRegisterPage() {
 
       formData.append("nidImage", data.nidImage[0]);
       const response = await axios.post(
-        "http://localhost:3000/seller",
+        `${process.env.NEXT_PUBLIC_API_URL}/seller`,
         formData,
       );
 

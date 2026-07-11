@@ -32,7 +32,7 @@ export default function CustomerProfilePage() {
     }
 
     axios
-      .get("http://localhost:3000/customer/profile", {
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/customer/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -63,7 +63,7 @@ export default function CustomerProfilePage() {
       if (profilePic) fd.append("profilePic", profilePic);
 
       const res = await axios.put(
-        `http://localhost:3000/customer/profile/${user.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/customer/profile/${user.id}`,
         fd,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -85,7 +85,7 @@ export default function CustomerProfilePage() {
   const avatarSrc =
     preview ||
     (user?.profilePic
-      ? `http://localhost:3000/uploads/profile/${user.profilePic}?t=${Date.now()}`
+      ? `${process.env.NEXT_PUBLIC_API_URL}/uploads/profile/${user.profilePic}?t=${Date.now()}`
       : null);
 
   const initials = user?.name

@@ -55,7 +55,7 @@ export default function SellerLoginPage() {
       setLoading(true);
 
       const response = await axios.post(
-        "http://localhost:3000/seller/login",
+        `${process.env.NEXT_PUBLIC_API_URL}/seller/login`,
         data,
       );
 

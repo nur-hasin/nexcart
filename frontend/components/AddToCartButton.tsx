@@ -41,7 +41,7 @@ export default function AddToCartButton({
 
       // API
       await axios.post(
-        `http://localhost:3000/customer/cart/${customerId}/${productId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/customer/cart/${customerId}/${productId}`,
         {},
         {
           headers: {
@@ -60,7 +60,7 @@ export default function AddToCartButton({
 
       toast.error(
         error.response?.data?.message ||
-          "Failed to add cart"
+        "Failed to add cart"
       );
     }
   };

@@ -8,7 +8,7 @@ const inputCls =
 const labelCls =
   "block text-[11px] font-semibold uppercase tracking-wide text-gray-400 mb-1.5";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 type Props = {
   seller: any;

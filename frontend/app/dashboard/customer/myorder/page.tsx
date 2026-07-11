@@ -18,24 +18,24 @@ import {
 } from "lucide-react";
 
 const statusConfig: Record<string, { label: string; color: string; icon: any }> = {
-  pending:    { label: "Pending",    color: "bg-amber-100 text-amber-700 ring-1 ring-amber-200",   icon: Clock        },
-  processing: { label: "Processing", color: "bg-blue-100 text-blue-700 ring-1 ring-blue-200",      icon: Truck        },
-  delivered:  { label: "Delivered",  color: "bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200", icon: CheckCircle },
-  cancelled:  { label: "Cancelled",  color: "bg-red-100 text-red-600 ring-1 ring-red-200",         icon: XCircle      },
+  pending: { label: "Pending", color: "bg-amber-100 text-amber-700 ring-1 ring-amber-200", icon: Clock },
+  processing: { label: "Processing", color: "bg-blue-100 text-blue-700 ring-1 ring-blue-200", icon: Truck },
+  delivered: { label: "Delivered", color: "bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200", icon: CheckCircle },
+  cancelled: { label: "Cancelled", color: "bg-red-100 text-red-600 ring-1 ring-red-200", icon: XCircle },
 };
 
 const paymentIcons: Record<string, string> = {
-  cash:  "💵",
+  cash: "💵",
   bkash: "📱",
   nagad: "🔴",
-  card:  "💳",
+  card: "💳",
 };
 
 export default function OrdersPage() {
-  const [orders, setOrders]         = useState<any[]>([]);
-  const [loading, setLoading]       = useState(true);
+  const [orders, setOrders] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<number | null>(null);
-  const [filter, setFilter]         = useState<string>("all");
+  const [filter, setFilter] = useState<string>("all");
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -43,11 +43,11 @@ export default function OrdersPage() {
         const token = Cookies.get("token");
         if (!token) { window.location.href = "/login/customer"; return; }
 
-        const payload    = JSON.parse(atob(token.split(".")[1]));
+        const payload = JSON.parse(atob(token.split(".")[1]));
         const customerId = payload.sub;
 
         const res = await axios.get(
-          `http://localhost:3000/customer/my-orders/${customerId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/customer/my-orders/${customerId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setOrders(res.data);
@@ -63,10 +63,10 @@ export default function OrdersPage() {
   const filtered = filter === "all" ? orders : orders.filter((o) => o.status === filter);
 
   const stats = [
-    { label: "Total",      value: orders.length,                                          color: "text-slate-800",    bg: "bg-slate-100"   },
-    { label: "Pending",    value: orders.filter((o) => o.status === "pending").length,    color: "text-amber-700",    bg: "bg-amber-50"    },
-    { label: "Delivered",  value: orders.filter((o) => o.status === "delivered").length,  color: "text-emerald-700",  bg: "bg-emerald-50"  },
-    { label: "Cancelled",  value: orders.filter((o) => o.status === "cancelled").length,  color: "text-red-600",      bg: "bg-red-50"      },
+    { label: "Total", value: orders.length, color: "text-slate-800", bg: "bg-slate-100" },
+    { label: "Pending", value: orders.filter((o) => o.status === "pending").length, color: "text-amber-700", bg: "bg-amber-50" },
+    { label: "Delivered", value: orders.filter((o) => o.status === "delivered").length, color: "text-emerald-700", bg: "bg-emerald-50" },
+    { label: "Cancelled", value: orders.filter((o) => o.status === "cancelled").length, color: "text-red-600", bg: "bg-red-50" },
   ];
 
   if (loading) {
@@ -144,9 +144,9 @@ export default function OrdersPage() {
         ) : (
           <div className="flex flex-col gap-4">
             {filtered.map((order) => {
-              const status   = statusConfig[order.status] ?? statusConfig["pending"];
+              const status = statusConfig[order.status] ?? statusConfig["pending"];
               const StatusIcon = status.icon;
-              const isOpen   = expandedId === order.id;
+              const isOpen = expandedId === order.id;
 
               return (
                 <div
@@ -214,10 +214,10 @@ export default function OrdersPage() {
                             className="h-full bg-indigo-500 rounded-full transition-all"
                             style={{
                               width:
-                                order.status === "pending"    ? "10%"  :
-                                order.status === "processing" ? "45%"  :
-                                order.status === "delivered"  ? "100%" :
-                                order.status === "cancelled"  ? "0%"   : "10%",
+                                order.status === "pending" ? "10%" :
+                                  order.status === "processing" ? "45%" :
+                                    order.status === "delivered" ? "100%" :
+                                      order.status === "cancelled" ? "0%" : "10%",
                               background: order.status === "cancelled" ? "#ef4444" : undefined,
                             }}
                           />
@@ -234,7 +234,7 @@ export default function OrdersPage() {
                             <img
                               src={
                                 item.product?.productImage
-                                  ? `http://localhost:3000/uploads/products/${item.product.productImage}`
+                                  ? `${process.env.NEXT_PUBLIC_API_URL}/uploads/products/${item.product.productImage}`
                                   : "/no-image.png"
                               }
                               alt={item.product?.productName}

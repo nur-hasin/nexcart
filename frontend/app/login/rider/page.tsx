@@ -60,7 +60,7 @@ export default function RiderLoginPage() {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:3000/riders/login",
+        `${process.env.NEXT_PUBLIC_API_URL}/riders/login`,
         {
           email: formData.email,
           password: formData.password,
@@ -89,7 +89,7 @@ export default function RiderLoginPage() {
 
       toast.error(
         error.response?.data?.message ||
-          "Login Failed"
+        "Login Failed"
       );
 
     } finally {

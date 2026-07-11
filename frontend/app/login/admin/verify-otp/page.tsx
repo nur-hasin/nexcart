@@ -76,7 +76,7 @@ export default function AdminVerifyOtpPage() {
     try {
       setLoading(true);
 
-      await axios.post("http://localhost:3000/admin/verify-otp", {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/admin/verify-otp`, {
         email,
         otp: otpCode,
       });
@@ -96,11 +96,11 @@ export default function AdminVerifyOtpPage() {
   };
 
   // ── Resend OTP ──
-    const handleResend = async () => {
+  const handleResend = async () => {
     try {
       setResendLoading(true);
 
-      await axios.post("http://localhost:3000/admin/resend-otp");
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/admin/resend-otp`);
 
       toast.success("OTP sent to your registered email");
       setOtp(Array(OTP_LENGTH).fill(""));
@@ -150,10 +150,9 @@ export default function AdminVerifyOtpPage() {
                     onKeyDown={(e) => handleKeyDown(index, e)}
                     onPaste={handlePaste}
                     className={`h-14 w-12 rounded-xl border-2 text-center text-xl font-bold text-slate-900 outline-none transition focus:ring-2
-                      ${
-                        digit
-                          ? "border-green-500 bg-green-50 focus:ring-green-100"
-                          : "border-gray-200 bg-white focus:border-green-500 focus:ring-green-100"
+                      ${digit
+                        ? "border-green-500 bg-green-50 focus:ring-green-100"
+                        : "border-gray-200 bg-white focus:border-green-500 focus:ring-green-100"
                       }`}
                   />
                 ))}

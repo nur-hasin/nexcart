@@ -1,7 +1,7 @@
 "use client";
 import { ShoppingBag } from "lucide-react";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 type Props = {
   orders: any[];
@@ -94,15 +94,14 @@ export default function OrdersSection({
 
                   <span
                     className={`inline-flex px-3 py-1 rounded-full text-xs font-bold border
-                    ${
-                      order.status === "pending"
+                    ${order.status === "pending"
                         ? "bg-yellow-50 text-yellow-700 border-yellow-200"
                         : order.status === "processing"
                           ? "bg-blue-50 text-blue-700 border-blue-200"
                           : order.status === "delivered"
                             ? "bg-green-50 text-green-700 border-green-200"
                             : "bg-red-50 text-red-700 border-red-200"
-                    }
+                      }
                   `}
                   >
                     {order.status}
@@ -180,15 +179,14 @@ export default function OrdersSection({
 
                         <span
                           className={`inline-flex px-3 py-1 rounded-full text-xs font-bold border
-                          ${
-                            item.status === "pending"
+                          ${item.status === "pending"
                               ? "bg-yellow-50 text-yellow-700 border-yellow-200"
                               : item.status === "processing"
                                 ? "bg-blue-50 text-blue-700 border-blue-200"
                                 : item.status === "accepted"
                                   ? "bg-green-50 text-green-700 border-green-200"
                                   : "bg-red-50 text-red-700 border-red-200"
-                          }
+                            }
                         `}
                         >
                           {item.status}

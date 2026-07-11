@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
 
       // Axios API call
       const response = await axios.post(
-        "http://localhost:3000/admin/login",
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/login`,
         data,
       );
 
@@ -122,11 +122,10 @@ export default function AdminLoginPage() {
                     placeholder="admin@nexcart.com"
                     {...register("email")}
                     className={`w-full rounded-xl border px-4 py-3 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:ring-2
-                    ${
-                      errors.email
+                    ${errors.email
                         ? "border-red-400 focus:ring-red-100"
                         : "border-gray-200 focus:border-green-500 focus:ring-green-100"
-                    }`}
+                      }`}
                   />
                   {errors.email && (
                     <p className="mt-1.5 text-xs text-red-500">
@@ -146,11 +145,10 @@ export default function AdminLoginPage() {
                       placeholder="••••••••"
                       {...register("password")}
                       className={`w-full rounded-xl border px-4 py-3 pr-11 text-sm text-gray-900 placeholder-gray-400 outline-none transition focus:ring-2
-                      ${
-                        errors.password
+                      ${errors.password
                           ? "border-red-400 focus:ring-red-100"
                           : "border-gray-200 focus:border-green-500 focus:ring-green-100"
-                      }`}
+                        }`}
                     />
                     <button
                       type="button"

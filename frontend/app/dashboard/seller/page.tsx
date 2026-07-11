@@ -26,7 +26,7 @@
 //   TrendingUp,
 // } from "lucide-react";
 
-// const API_BASE_URL = "http://localhost:3000";
+// const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 // const PRODUCT_CATEGORIES = [
 //   "Electronics",
@@ -1314,7 +1314,7 @@ import ProductsSection from "./ProductsSection";
 import OrdersSection from "./OrdersSection";
 import ProfileSection from "./ProfileSection";
 
-export const API_BASE_URL = "http://localhost:3000";
+export const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 export const PRODUCT_CATEGORIES = [
   "Electronics",
@@ -1836,11 +1836,10 @@ export default function SellerDashboardPage() {
                   setActiveSection(item.id as typeof activeSection)
                 }
                 className={`relative flex items-center gap-3 w-full text-left px-3 py-[11px] rounded-xl text-sm font-medium transition-all
-                ${
-                  isActive
+                ${isActive
                     ? "bg-green-400/15 text-green-400"
                     : "text-white/55 hover:bg-white/[0.08] hover:text-white"
-                }`}
+                  }`}
               >
                 {isActive && (
                   <span className="absolute left-0 top-[20%] h-[60%] w-[3px] bg-green-400 rounded-r-full" />

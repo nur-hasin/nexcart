@@ -36,7 +36,7 @@ export type Product = {
 
 export type PriceFilter = "default" | "lowToHigh" | "highToLow";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 const PRODUCT_CATEGORIES = [
   "Electronics",
@@ -345,7 +345,7 @@ function ProductCard({ product }: { product: Product }) {
           <AddToCartButton
             productName={product.productName}
             quantity={Number(product.quantity)}
-             productId={product.id}     />
+            productId={product.id} />
         </Box>
       </Box>
 

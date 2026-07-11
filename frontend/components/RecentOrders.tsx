@@ -32,7 +32,7 @@ export default function RecentOrders() {
         const customerId = payload.sub;
 
         const res = await axios.get(
-          `http://localhost:3000/customer/my-orders/${customerId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/customer/my-orders/${customerId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -127,7 +127,7 @@ export default function RecentOrders() {
                       <img
                         src={
                           order.orderItems?.[0]?.product?.productImage
-                            ? `http://localhost:3000/uploads/products/${order.orderItems[0].product.productImage}`
+                            ? `${process.env.NEXT_PUBLIC_API_URL}/uploads/products/${order.orderItems[0].product.productImage}`
                             : "/no-image.png"
                         }
                         alt="Product"

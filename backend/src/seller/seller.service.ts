@@ -906,42 +906,30 @@ export class SellerService {
     );
   }
 
- async getSellerOrderById(
-  orderId: number,
-  sellerId: number,
-) {
-  const order = await this.orderRepository.findOne({
-    where: {
-      id: orderId,
-    },
+  //for dynamic route in seller
+  async getSellerOrderById(orderId: number, sellerId: number) {
+    const order = await this.orderRepository.findOne({
+      where: {
+        id: orderId,
+        orderItems: {
+          seller: {
+            id: sellerId,
+          },
+        },
+      },
 
-    relations: [
-      'customer',
-      'orderItems',
-      'orderItems.product',
-      'orderItems.seller',
-    ],
-  });
+      relations: [
+        'customer',
+        'orderItems',
+        'orderItems.product',
+        'orderItems.seller',
+      ],
+    });
 
-  if (!order) {
-    throw new Error('Order not found');
+    if (!order) {
+      throw new Error('Order not found');
+    }
+
+    return order;
   }
-
-  // Keep only this seller's items
-  const sellerItems = order.orderItems.filter(
-    (item) => item.seller?.id === sellerId,
-  );
-
-  // Security check
-  if (sellerItems.length === 0) {
-    throw new Error(
-      'You are not authorized to view this order',
-    );
-  }
-
-  return {
-    ...order,
-    orderItems: sellerItems,
-  };
-}
 }

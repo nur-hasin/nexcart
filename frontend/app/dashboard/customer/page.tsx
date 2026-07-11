@@ -57,14 +57,14 @@ export default function CustomerDashboard() {
     const payload = JSON.parse(atob(token.split(".")[1]));
 
     axios
-      .get("http://localhost:3000/customer/profile", {
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/customer/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setUser(res.data))
       .catch(console.log);
 
     axios
-      .get(`http://localhost:3000/customer/my-orders/${payload.sub}`, {
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/customer/my-orders/${payload.sub}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setOrders(res.data))
@@ -106,8 +106,8 @@ export default function CustomerDashboard() {
 
   const navItems = [
     { key: "overview", label: "Overview", icon: TrendingUp },
-    { key: "cart",     label: "My Cart",  icon: ShoppingCart },
-    { key: "orders",   label: "Orders",   icon: Package },
+    { key: "cart", label: "My Cart", icon: ShoppingCart },
+    { key: "orders", label: "Orders", icon: Package },
   ] as const;
 
   return (
@@ -129,7 +129,7 @@ export default function CustomerDashboard() {
         <div className="px-6 py-5 border-b border-slate-100">
           <div className="flex items-center gap-3">
             <img
-              src={user?.profilePic ? `http://localhost:3000/uploads/profile/${user.profilePic}` : "/no-image.png"}
+              src={user?.profilePic ? `${process.env.NEXT_PUBLIC_API_URL}/uploads/profile/${user.profilePic}` : "/no-image.png"}
               alt="Profile"
               className="w-10 h-10 rounded-full object-cover ring-2 ring-indigo-100"
             />
@@ -218,7 +218,7 @@ export default function CustomerDashboard() {
             </button>
 
             <img
-              src={user?.profilePic ? `http://localhost:3000/uploads/profile/${user.profilePic}` : "/no-image.png"}
+              src={user?.profilePic ? `${process.env.NEXT_PUBLIC_API_URL}/uploads/profile/${user.profilePic}` : "/no-image.png"}
               alt="Profile"
               className="w-9 h-9 rounded-full object-cover ring-2 ring-indigo-100"
             />
@@ -259,7 +259,7 @@ export default function CustomerDashboard() {
               <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-6 flex flex-col sm:flex-row items-center sm:items-start gap-5">
                 <div className="relative shrink-0">
                   <img
-                    src={user?.profilePic ? `http://localhost:3000/uploads/profile/${user.profilePic}` : "/no-image.png"}
+                    src={user?.profilePic ? `${process.env.NEXT_PUBLIC_API_URL}/uploads/profile/${user.profilePic}` : "/no-image.png"}
                     alt="Profile"
                     className="w-20 h-20 rounded-2xl object-cover ring-4 ring-indigo-50"
                   />

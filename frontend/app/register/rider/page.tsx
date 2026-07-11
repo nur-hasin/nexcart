@@ -111,7 +111,7 @@ export default function RiderRegisterPage() {
 
       // API CALL
       const response = await axios.post(
-        "http://localhost:3000/riders/createRider",
+        `${process.env.NEXT_PUBLIC_API_URL}/riders/createRider`,
         formData
       );
 

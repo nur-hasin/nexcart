@@ -44,7 +44,7 @@ export default function AdminRegisterPage() {
   const onSubmit = async (data: AdminRegisterFormData) => {
     try {
       setLoading(true);
-      await axios.post("http://localhost:3000/admin", {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/admin`, {
         name: data.name,
         email: data.email,
         password: data.password,

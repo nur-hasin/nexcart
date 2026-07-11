@@ -59,7 +59,7 @@ export default function CustomerRegisterPage() {
 
       // Backend API Call
       const res = await axios.post(
-        "http://localhost:3000/customer/register",
+        `${process.env.NEXT_PUBLIC_API_URL}/customer/register`,
         {
           name: formData.name,
           email: formData.email,
@@ -90,7 +90,7 @@ export default function CustomerRegisterPage() {
       // Error Toast
       toast.error(
         error.response?.data?.message ||
-          "Registration Failed"
+        "Registration Failed"
       );
 
     } finally {

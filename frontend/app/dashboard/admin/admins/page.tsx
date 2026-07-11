@@ -52,7 +52,7 @@ export default function AdminsPage() {
   const fetchAdmins = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:3000/admin", authHeader());
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/admin`, authHeader());
       const data = Array.isArray(res.data) ? res.data : [];
 
       // Always sort by ID ascending — oldest first, stable order
@@ -74,7 +74,7 @@ export default function AdminsPage() {
     try {
       setActionId(id);
       await axios.patch(
-        `http://localhost:3000/admin/${id}/approve`,
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/${id}/approve`,
         {},
         authHeader(),
       );
@@ -93,16 +93,16 @@ export default function AdminsPage() {
 
   const displayAdmins = searchTerm.trim()
     ? admins.filter((a) => {
-        const search = searchTerm.toLowerCase().trim();
-        const nameWords = a.name?.toLowerCase().split(" ") ?? [];
-        const emailWords = a.email?.toLowerCase().split(/[@.]/) ?? [];
-        return (
-          nameWords.some((w) => w === search) ||
-          emailWords.some((w) => w === search) ||
-          a.email?.toLowerCase() === search ||
-          String(a.id) === search
-        );
-      })
+      const search = searchTerm.toLowerCase().trim();
+      const nameWords = a.name?.toLowerCase().split(" ") ?? [];
+      const emailWords = a.email?.toLowerCase().split(/[@.]/) ?? [];
+      return (
+        nameWords.some((w) => w === search) ||
+        emailWords.some((w) => w === search) ||
+        a.email?.toLowerCase() === search ||
+        String(a.id) === search
+      );
+    })
     : admins;
 
   //  Deny admin (removes account)
@@ -110,7 +110,7 @@ export default function AdminsPage() {
     try {
       setActionId(id);
       await axios.patch(
-        `http://localhost:3000/admin/${id}/deny`,
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/${id}/deny`,
         {},
         authHeader(),
       );
@@ -132,7 +132,7 @@ export default function AdminsPage() {
     try {
       setActionId(id);
       await axios.patch(
-        `http://localhost:3000/admin/${id}/deactivate`,
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/${id}/deactivate`,
         {},
         authHeader(),
       );
@@ -154,7 +154,7 @@ export default function AdminsPage() {
     try {
       setActionId(id);
       await axios.patch(
-        `http://localhost:3000/admin/${id}/activate`,
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/${id}/activate`,
         {},
         authHeader(),
       );

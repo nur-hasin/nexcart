@@ -43,12 +43,12 @@ export default function SellersPage() {
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [searchName, setSearchName] = useState("");
-  const [searchTerm, setSearchTerm] = useState(""); // ← add this
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchSellers = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:3000/seller", authHeader());
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/seller`, authHeader());
       // Backend returns { message, data: [...] }
       const raw = res.data?.data ?? [];
       setSellers(
@@ -72,10 +72,9 @@ export default function SellersPage() {
   }, []);
 
   const handleDelete = async (id: number) => {
-    if (!confirm("Delete this seller?")) return;
     try {
       setDeletingId(id);
-      await axios.delete(`http://localhost:3000/seller/${id}`, authHeader());
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/seller/${id}`, authHeader());
       toast.success("Seller deleted");
       setSellers((prev) => prev.filter((s) => s.id !== id));
     } catch (err) {
@@ -92,16 +91,16 @@ export default function SellersPage() {
   // Client-side search — starts-with word match
   const filtered = searchTerm.trim()
     ? sellers.filter((s) => {
-        const search = searchTerm.toLowerCase().trim();
-        const nameWords = s.name?.toLowerCase().split(" ") ?? [];
-        const emailWords = s.email?.toLowerCase().split(/[@.]/) ?? [];
-        return (
-          nameWords.some((w) => w === search) ||
-          emailWords.some((w) => w === search) ||
-          s.email?.toLowerCase() === search ||
-          String(s.id) === search
-        );
-      })
+      const search = searchTerm.toLowerCase().trim();
+      const nameWords = s.name?.toLowerCase().split(" ") ?? [];
+      const emailWords = s.email?.toLowerCase().split(/[@.]/) ?? [];
+      return (
+        nameWords.some((w) => w === search) ||
+        emailWords.some((w) => w === search) ||
+        s.email?.toLowerCase() === search ||
+        String(s.id) === search
+      );
+    })
     : sellers;
 
   const totalProducts = sellers.reduce(

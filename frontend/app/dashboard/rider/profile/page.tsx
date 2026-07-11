@@ -39,7 +39,7 @@ const RiderProfilePage = () => {
     riderId = decoded.sub;
   }
 
-  const API = "http://localhost:3000/riders";
+  const API = `${process.env.NEXT_PUBLIC_API_URL}/riders`;
 
   // =========================================
   // AUTH CHECK
@@ -68,7 +68,7 @@ const RiderProfilePage = () => {
       setRider(riderRes.data);
 
       if (riderRes.data?.profileImage) {
-        setPreviewImage(`http://localhost:3000/uploads/riders/${riderRes.data.profileImage}`);
+        setPreviewImage(`${process.env.NEXT_PUBLIC_API_URL}/uploads/riders/${riderRes.data.profileImage}`);
       }
     } catch {
       toast.error("Failed to load profile");

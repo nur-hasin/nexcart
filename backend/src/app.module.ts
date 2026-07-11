@@ -71,7 +71,7 @@ import { PusherModule } from './pusher/pusher.module';
         type: 'postgres',
         url: config.get<string>('DATABASE_URL'), //  safely loaded at runtime
         autoLoadEntities: true,
-        synchronize: true,
+        synchronize: false,
         ssl: {
           rejectUnauthorized: false,
         },

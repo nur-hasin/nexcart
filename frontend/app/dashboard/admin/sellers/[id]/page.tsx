@@ -1,7 +1,3 @@
-//  SSR PAGE — no "use client" directive
-// Data is fetched on the SERVER before the page renders
-// This satisfies: SSR + Dynamic Route [id] requirements
-
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
@@ -49,7 +45,7 @@ interface Seller {
 // SERVER-SIDE DATA FETCH
 async function getSellerById(id: string, token: string): Promise<Seller | null> {
     try {
-        const res = await fetch(`http://localhost:3000/seller/${id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seller/${id}`, {
             cache: "no-store",
             headers: {
                 Authorization: `Bearer ${token}`, //  pass token in header

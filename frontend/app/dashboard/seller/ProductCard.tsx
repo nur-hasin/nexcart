@@ -2,7 +2,7 @@
 
 import { Package, Pencil, Trash2 } from "lucide-react";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 type Product = {
   id: number;

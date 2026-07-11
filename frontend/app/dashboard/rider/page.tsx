@@ -38,7 +38,7 @@ const RiderDashboard = () => {
     riderId = decoded.sub;
   }
 
-  const API = "http://localhost:3000/riders";
+  const API = `${process.env.NEXT_PUBLIC_API_URL}/riders`;
 
   // =========================================
   // AUTH CHECK
@@ -70,7 +70,7 @@ const RiderDashboard = () => {
       // IMAGE PREVIEW
       if (riderRes.data?.profileImage) {
         setPreviewImage(
-          `http://localhost:3000/uploads/riders/${riderRes.data.profileImage}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/uploads/riders/${riderRes.data.profileImage}`,
         );
       }
 

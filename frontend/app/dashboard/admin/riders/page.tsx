@@ -31,7 +31,7 @@ export default function RidersPage() {
     try {
       setLoading(true);
       const res = await axios.get(
-        "http://localhost:3000/riders/all-riders",
+        `${process.env.NEXT_PUBLIC_API_URL}/riders/all-riders`,
         authHeader(),
       );
       const data = Array.isArray(res.data) ? res.data : [];
@@ -56,7 +56,7 @@ export default function RidersPage() {
   const handleDelete = async (id: number) => {
     try {
       setDeletingId(id);
-      await axios.delete(`http://localhost:3000/riders/${id}`, authHeader());
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/riders/${id}`, authHeader());
       toast.success("Rider deleted");
       setRiders((prev) => prev.filter((r) => r.id !== id));
     } catch (err) {
@@ -72,16 +72,16 @@ export default function RidersPage() {
 
   const filtered = searchTerm.trim()
     ? riders.filter((r) => {
-        const search = searchTerm.toLowerCase().trim();
-        const nameWords = r.name?.toLowerCase().split(" ") ?? [];
-        const emailWords = r.email?.toLowerCase().split(/[@.]/) ?? [];
-        return (
-          nameWords.some((w) => w === search) ||
-          emailWords.some((w) => w === search) ||
-          r.email?.toLowerCase() === search ||
-          String(r.id) === search
-        );
-      })
+      const search = searchTerm.toLowerCase().trim();
+      const nameWords = r.name?.toLowerCase().split(" ") ?? [];
+      const emailWords = r.email?.toLowerCase().split(/[@.]/) ?? [];
+      return (
+        nameWords.some((w) => w === search) ||
+        emailWords.some((w) => w === search) ||
+        r.email?.toLowerCase() === search ||
+        String(r.id) === search
+      );
+    })
     : riders;
 
   const available = riders.filter((r) => r.status === "available").length;
@@ -217,13 +217,12 @@ export default function RidersPage() {
                     {/* Status */}
                     <td className="py-4">
                       <span
-                        className={`rounded-full px-3 py-1 text-xs font-bold ${
-                          rider.status === "available"
+                        className={`rounded-full px-3 py-1 text-xs font-bold ${rider.status === "available"
                             ? "bg-green-100 text-green-700"
                             : rider.status === "busy"
                               ? "bg-orange-100 text-orange-600"
                               : "bg-gray-100 text-gray-500"
-                        }`}
+                          }`}
                       >
                         {rider.status === "available"
                           ? "Available"
